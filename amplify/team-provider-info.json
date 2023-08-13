@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-gtibdsbackend-staging-73352-authRole",
+      "UnauthRoleArn": "arn:aws:iam::984717248114:role/amplify-gtibdsbackend-staging-73352-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::984717248114:role/amplify-gtibdsbackend-staging-73352-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-gtibdsbackend-staging-73352-deployment",
+      "UnauthRoleName": "amplify-gtibdsbackend-staging-73352-unauthRole",
+      "StackName": "amplify-gtibdsbackend-staging-73352",
+      "StackId": "arn:aws:cloudformation:us-east-1:984717248114:stack/amplify-gtibdsbackend-staging-73352/c0c57160-39ab-11ee-957d-12390a332661",
+      "AmplifyAppId": "d280ygd2adujfl"
+    },
+    "categories": {
+      "api": {
+        "gtibdsbackend": {}
+      }
+    }
+  }
+}
