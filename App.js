@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 //aws amplify imports
 import { Amplify, API, graphqlOperation } from 'aws-amplify';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/auth';
@@ -16,6 +16,7 @@ Amplify.configure(awsconfig);
 export default function App() {
 
   const [isLoading , setLoading] = React.useState(false);
+  const [blogTitle , setBlogTitle] = React.useState("");
   const [blogs , setBlogs] = React.useState([]);
   const [error , setError] = React.useState({});
 
@@ -25,7 +26,7 @@ export default function App() {
       setLoading(true);
       const createdTodo = await API.graphql({
         query: createBlog,
-        variables: {input: { name: 'My 3rd blog!' }},
+        variables: {input: { name: blogTitle }},
         authMode: GRAPHQL_AUTH_MODE.API_KEY
       });
       
@@ -70,8 +71,9 @@ export default function App() {
       
 
       <StatusBar style="auto" />
-      <View style={{borderWidth:1}}>
-
+      <View style={{borderWidth:1, width:"90%"}}>
+        <Text>{}</Text>
+        <TextInput onChangeText={setBlogTitle} style={{borderWidth:1, height:30}} placeholder='Blog Title'/>
         <Button onPress={addBlogFxn} title="Add Blog"/>
         <Button onPress={listBlogsFxn} title="List Blogs"/>
       </View>
@@ -81,7 +83,7 @@ export default function App() {
         <Text>List of blogs titles</Text>
         {blogs.map( (value, index) => <Text>{value.name}</Text>)}
       </View>
-      <View style={{borderWidth:1}}>
+      <View style={{borderWidth:1, width:"100%"}}>
         <Text>Error message:  {error.message}</Text>
       </View>
 
@@ -94,6 +96,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    
+    justifyContent: 'centerd',
+    marginTop:"20%"
   },
 });
