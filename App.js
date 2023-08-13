@@ -14,7 +14,7 @@ Amplify.configure(awsconfig);
 export default function App() {
 
   const [isLoading , setLoading] = React.useState(false);
-  const [blogs , setBlogs] = React.useState([1,2,3]);
+  const [blogs , setBlogs] = React.useState([]);
   const [error , setError] = React.useState({});
 
   const addBlogFxn = async()=>{
@@ -42,6 +42,7 @@ export default function App() {
     try {
       setLoading(true)
       const result = await API.graphql(graphqlOperation(listBlogs))
+      setBlogs(result)
       console.log(result)
       setLoading(false);
       
