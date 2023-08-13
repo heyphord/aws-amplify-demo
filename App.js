@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
 //aws amplify imports
 import { Amplify, API, graphqlOperation } from 'aws-amplify';
+import { GRAPHQL_AUTH_MODE } from '@aws-amplify/auth';
+
 import { createBlog } from "./src/graphql/mutations";
 import { listBlogs } from "./src/graphql/queries";
 
@@ -21,13 +23,14 @@ export default function App() {
     try {
       
       setLoading(true);
-      const result = await API.graphql(graphqlOperation(createBlog, {
-        input: {
-          name: 'My first blog!'
-        }
-      }))
+      const createdTodo = await API.graphql({
+        query: createBlog,
+        variables: {input: { name: 'My 3rd blog!' }},
+        authMode: GRAPHQL_AUTH_MODE.API_KEY
+      });
+      
   
-      console.log(result);
+      console.log(createdTodo);
       setLoading(false)
     } catch (error) {
       setLoading(false)
@@ -41,9 +44,16 @@ export default function App() {
     
     try {
       setLoading(true)
-      const result = await API.graphql(graphqlOperation(listBlogs))
-      setBlogs(result)
-      console.log(result)
+      // const result = await API.graphql(graphqlOperation(listBlogs))
+      const result = await API.graphql({
+        query: listBlogs,
+        // variables: {input: { name: 'My 2nd blog!' }},
+        authMode: GRAPHQL_AUTH_MODE.API_KEY,
+
+      });
+      
+      setBlogs(result.data.listBlogs.items)
+      console.log(result.data.listBlogs.items)
       setLoading(false);
       
     } catch (error) {
@@ -69,7 +79,7 @@ export default function App() {
 
       <View style={{borderWidth:1}}>
         <Text>List of blogs titles</Text>
-        {blogs.map( (value, index) => <Text>{value}</Text>)}
+        {blogs.map( (value, index) => <Text>{value.name}</Text>)}
       </View>
       <View style={{borderWidth:1}}>
         <Text>Error message:  {error.message}</Text>
